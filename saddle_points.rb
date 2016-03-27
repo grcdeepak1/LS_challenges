@@ -8,27 +8,25 @@ class Matrix
   end
 
   def saddle_points
-    row_max = row_max_points
-    col_min = col_min_points
-    row_max & col_min
+    points_with_max_values & points_with_min_values
   end
 
   private
 
-  def row_max_points
-    row_max = []
+  def points_with_max_values
+    points_with_max_values = []
     rows.each_with_index do |row, row_idx|
-      find_max_indices(row).each { |col_idx| row_max << [row_idx, col_idx] }
+      find_max_indices(row).each { |col_idx| points_with_max_values << [row_idx, col_idx] }
     end
-    row_max
+    points_with_max_values
   end
 
-  def col_min_points
-    col_min = []
+  def points_with_min_values
+    points_with_min_values = []
     columns.each_with_index do |col, col_idx|
-      find_min_indices(col).each { |row_idx| col_min << [row_idx, col_idx] }
+      find_min_indices(col).each { |row_idx| points_with_min_values << [row_idx, col_idx] }
     end
-    col_min
+    points_with_min_values
   end
 
   def find_max_indices(arr)

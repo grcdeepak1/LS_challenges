@@ -51,4 +51,18 @@ class MatrixTest < Minitest::Test
     matrix = Matrix.new("4 5 4\n3 5 5\n1 5 4")
     assert_equal [[0, 1], [1, 1], [2, 1]], matrix.saddle_points
   end
+    def test_multiple_saddle_points_2
+    matrix = Matrix.new("1 1 1\n1 5 1\n1 5 1")
+    assert_equal [[0, 0], [0, 1], [0, 2]], matrix.saddle_points
+  end
+
+  def test_multiple_saddle_points_3
+    matrix = Matrix.new("1 1 1\n1 5 1\n1 1 1")
+    assert_equal [[0, 0], [0, 1], [0, 2], [2, 0], [2, 1], [2, 2]], matrix.saddle_points
+  end
+
+  def test_multiple_saddle_points_4
+    matrix = Matrix.new("1 1 1\n1 1 1\n1 1 1")
+    assert_equal [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]], matrix.saddle_points
+  end
 end
