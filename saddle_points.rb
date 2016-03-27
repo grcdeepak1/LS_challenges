@@ -4,7 +4,7 @@ class Matrix
   def initialize(str)
     @matrix = str.split("\n").map { |r| r.split(" ") }
     @rows = @matrix.each { |r| r.collect!(&:to_i) }
-    @columns = get_cols_from_rows(@rows)
+    @columns = @rows.transpose
   end
 
   def saddle_points
@@ -18,7 +18,7 @@ class Matrix
   def row_max_points
     row_max = []
     rows.each_with_index do |row, row_idx|
-      find_max_with_index(row).each { |_n, col_idx| row_max << [row_idx, col_idx] }
+      find_max_indices(row).each { |col_idx| row_max << [row_idx, col_idx] }
     end
     row_max
   end
@@ -26,39 +26,16 @@ class Matrix
   def col_min_points
     col_min = []
     columns.each_with_index do |col, col_idx|
-      find_min_with_index(col).each { |_n, row_idx| col_min << [row_idx, col_idx] }
+      find_min_indices(col).each { |row_idx| col_min << [row_idx, col_idx] }
     end
     col_min
   end
 
-  def find_max_with_index(arr)
-    ret_arr = []
-    arr.each_with_index do |num, i|
-      if num == arr.max
-        ret_arr << [num, i]
-      end
-    end
-    ret_arr
+  def find_max_indices(arr)
+    arr.each_index.select { |i| arr[i] == arr.max }
   end
 
-  def find_min_with_index(arr)
-    ret_arr = []
-    arr.each_with_index do |num, i|
-      if num == arr.min
-        ret_arr << [num, i]
-      end
-    end
-    ret_arr
-  end
-
-  def get_cols_from_rows(rows)
-    cols = []
-    cols_size = rows[0].size
-    (0..(cols_size - 1)).each do |i|
-      col = []
-      rows.each { |row| col << row[i] }
-      cols << col
-    end
-    cols
+  def find_min_indices(arr)
+    arr.each_index.select { |i| arr[i] == arr.min }
   end
 end
