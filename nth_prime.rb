@@ -11,8 +11,7 @@ class Prime
   private
 
   def prime?(num)
-    (2..sqrt(num)).each { |i| return false if num % i == 0 }
-    true
+    !(2..sqrt(num)).detect { |i| num % i == 0 }
   end
 
   def find_next_prime(num)
